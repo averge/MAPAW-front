@@ -1,0 +1,176 @@
+<div style="float: right; margin-right: 5%;">
+    <a  routerLink="/perfil"> hola juan</a>
+    <i class="material-icons">person</i>
+</div>
+<h1 class="heading__title_e">Home Profesor</h1>
+<button mat-raised-button color="primary" (click)="ver='alumnos'">Alumnos</button>
+<button mat-raised-button color="primary" (click)="ver='ejercicios'">Ejercicios</button>
+<button mat-raised-button color="primary" (click)="ver='bloques'">Bloques</button>
+
+<i class="material-icons">sports_gymnastics</i>
+
+<div *ngIf="ver=='alumnos'">
+    <div class="heading_e">
+        <h1 class="heading__title_e">Alumnos</h1>
+      </div>
+  <ul class="cards">
+    <li *ngFor="let user of usuarios">
+      <a routerLink="/perfil" class="card">
+        <img *ngIf="user.plan==3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx13XDfBloMtvkfPBt1TAgDRBGr5VV0FcnAzi22OB5kg&s" class="card__image" alt="" />
+        <img *ngIf="user.plan==2" src="data:image/png;base64,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" class="card__image" alt="" />
+        <div class="card__overlay">
+          <div class="card__header">
+            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>                      
+            <img class="card__thumb" src="https://i.imgur.com/7D7I6dI.png" alt="" />
+            <div class="card__header-text">
+              <h3 class="card__title">{{user.nombre}}</h3>       
+            </div>
+          </div>
+          <p class="card__description">Sin Lesiones</p>
+        </div>
+      </a>      
+    </li>
+  </ul>
+</div>
+<div *ngIf="ver=='ejercicios'">
+
+<div class="main-containe_e">
+  <div class="heading_e">
+    <h1 class="heading__title_e">Ejercicios</h1>
+  </div>
+  <br>
+<button mat-raised-button color="secundary" (click)="nuevoEjercicio()">Agregar Nuevo Ejercicio</button>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Filtro</mat-label>
+<mat-select (selectionChange)="filtroTipoChange()" [formControl]="filtroTipo">
+  <mat-option value="Todos">Todos</mat-option>
+  <mat-option value="Aerobico">Aerobico</mat-option>
+  <mat-option value="Anaerobico">Anaerobico</mat-option>
+  <mat-option value="Mixto">Mixto</mat-option>
+</mat-select>
+</mat-form-field>
+<br>
+
+
+  <div class="cards_e">
+    <div *ngFor="let e of ejerciciosValid">
+        <div *ngIf="e.tipo=='Aerobico'">
+            <div class="card_e card-1">
+                <div class="card__icon_e"><i class="material-icons">timer</i></div>
+                <div class="card__icon_e" *ngFor="let in of counter(e.dificultad)">
+                    <i class="material-icons">star</i>
+                </div>
+                <div class="card__icon_e" *ngFor="let in of counter(5-e.dificultad)">    
+                    <i class="material-icons">star_border</i>
+                </div>
+                <h2 class="card__title_e">{{e.nombre}}</h2>      
+                <p class="card__apply_e">
+                  <a class="card__link_e" (click)="e.d=!e.d" >Ver detalles <i class="fas fa-arrow-right"></i></a>
+                </p>
+                <br>
+                    <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
+                    <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
+                    <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
+
+                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" src="https://www.youtube.com/embed/npBdpO5B_mQ" frameborder="0" allowfullscreen></iframe>
+
+                    <button mat-raised-button color="warn"  *ngIf="e.d" style="grid-row:auto;
+                      grid-column: 2/6;">Eliminar ejercicio</button>
+              </div>
+                   </div>
+        <div *ngIf="e.tipo=='Anaerobico'">
+            <div class="card_e card-2">
+                <div class="card__icon_e"><i class="material-icons">fitness_center</i></div>
+                <div class="card__icon_e" *ngFor="let in of counter(e.dificultad)">
+                    <i class="material-icons">star</i>
+                </div>
+                <div class="card__icon_e" *ngFor="let in of counter(5-e.dificultad)">    
+                    <i class="material-icons">star_border</i>
+                </div>
+                
+                <h2 class="card__title_e">{{e.nombre}}</h2>
+                
+                <p class="card__apply_e">
+                    <a class="card__link_e" (click)="e.d=!e.d" >Ver detalles <i class="fas fa-arrow-right"></i></a>
+                  </p>
+                  <br>
+                      <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
+                      <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
+                    <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
+
+                      <button mat-raised-button color="warn"  *ngIf="e.d" style="grid-row:auto;
+                      grid-column: 2/6;">Eliminar ejercicio</button>
+              </div>
+        </div>
+        <div *ngIf="e.tipo=='Mixto'">
+            <div class="card_e card-3">
+                <div class="card__icon_e"><i class="material-icons">sports_gymnastics</i></div>
+                <div class="card__icon_e" *ngFor="let in of counter(e.dificultad)">
+                    <i class="material-icons">star</i>
+                </div>
+                <div class="card__icon_e" *ngFor="let in of counter(5-e.dificultad)">    
+                    <i class="material-icons">star_border</i>
+                </div>
+                <h2 class="card__title_e">{{e.nombre}}</h2>
+                <p class="card__apply_e">
+                    <a class="card__link_e" (click)="e.d=!e.d" >Ver detalles <i class="fas fa-arrow-right"></i></a>
+                  </p>
+                  <br>
+                      <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
+                      <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
+                    <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
+
+                      <button mat-raised-button color="warn"  *ngIf="e.d" style="grid-row:auto;
+                      grid-column: 2/6;">Eliminar ejercicio</button>
+              </div>
+        </div>
+    </div>
+   
+  </div>
+</div>
+</div>
+<div *ngIf="ver=='bloques'">
+  <br>
+<button mat-raised-button color="secundary" (click)="nuevoBloque()">Agregar Nuevo Bloque</button>
+
+<section class="page-contain">
+  <button (click)="verBloque()" class="data-card">
+    <h3>1</h3>
+    <h4>entrada en calor</h4>
+    <p>Ejercicios para empezar el entrenamiento</p>
+    <span class="link-text">
+      Ver ejercicios
+      <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"/>
+</svg>
+    </span>
+  </button>
+  <button (click)="verBloque()" class="data-card">
+    <h3>2</h3>
+    <h4>Fuerza</h4>
+    <p>Ejercicios para musculacion</p>
+    <span class="link-text">
+      ver ejercicios
+      <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"/>
+</svg>
+    </span>
+  </button>
+  <button (click)="verBloque()" class="data-card">
+    <h3>1</h3>
+    <h4>entrada en calor</h4>
+    <p>Ejercicios para empezar el entrenamiento</p>
+    <span class="link-text">
+      Ver ejercicios
+      <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"/>
+</svg>
+    </span>
+  </button>
+</section>
+</div>
+
+<div>
+
+
+</div>

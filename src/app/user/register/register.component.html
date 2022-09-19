@@ -1,0 +1,92 @@
+<form [formGroup]="registerForm">
+    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Rol</mat-label>
+    <mat-select formControlName="rol" (selectionChange)="cambioRol()">
+        <mat-option value="P">Profesor</mat-option>
+        <mat-option value="A">Alumno</mat-option>
+    </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Usuario</mat-label>
+    <input matInput placeholder="Ingresar usuario" name="usename" formControlName="user">
+    <mat-error>
+        <span *ngIf="registerForm.controls['user'].hasError('required')">El usuario es requerido</span>
+    </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Contraseña</mat-label>
+    <input matInput placeholder="Ingresar Contraseña" value="" name="password" type="password" formControlName="pass">
+    <mat-error>
+        <span *ngIf="registerForm.controls['pass'].hasError('required')">La contraseña es requerida</span>
+    </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Ingresa tu nombre" name="nombre" formControlName="nombre">
+        <mat-error>
+            <span *ngIf="registerForm.controls['nombre'].hasError('required')">El nombre es requerido</span>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Apellido</mat-label>
+        <input matInput placeholder="Ingresa tu apellido" name="apellido" formControlName="apellido">
+        <mat-error>
+            <span *ngIf="registerForm.controls['apellido'].hasError('required')">El apellido es requerido</span>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Telefono</mat-label>
+        <input (keyup)="validateTelefono()" matInput placeholder="Ingresar telefono" name="telefono" formControlName="telefono">
+        <mat-error>
+            <span *ngIf="registerForm.controls['telefono'].hasError('required')">El telefono es requerido</span>
+            <span *ngIf="registerForm.controls['telefono'].hasError('minlength')">El telefono debe ser mas largo</span>
+            <span *ngIf="registerForm.controls['telefono'].hasError('maxlength')">El telefono debe ser mas corto</span>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Correo</mat-label>
+        <input matInput placeholder="ingresar email" name="correo" formControlName="mail">
+        <mat-error>
+            <span *ngIf="registerForm.controls['mail'].hasError('required')">El correo es requerido</span>
+            <span *ngIf="registerForm.controls['mail'].hasError('email')">El correo no es valido</span>
+        </mat-error>
+
+    </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Ingresar fecha de nacimiento" name="fecha" formControlName="fechaNacieminto">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>
+            <span *ngIf="registerForm.controls['fechaNacieminto'].hasError('required')">La fecha es requerida</span>
+        </mat-error>
+        </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>DNI</mat-label>
+        <input (keyup)="validateDni()" matInput placeholder="Enter your name" name="dni" formControlName="dni">
+        <mat-error>
+            <span *ngIf="registerForm.controls['dni'].hasError('required')">El dni es requerido</span>
+            <span *ngIf="registerForm.controls['dni'].hasError('minlength')">El dni debe ser mas largo</span>
+        </mat-error>
+    </mat-form-field>
+    <div *ngIf="!esProfesor">
+
+        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Plan</mat-label>
+            <mat-select formControlName="plan" >
+                <mat-option value="2">Plan de dos dias </mat-option>
+                <mat-option value="3">Plan de tres dias</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Dolencias o enfermedades</mat-label>
+        <input matInput placeholder="Enter your name" name="dolencias" formControlName="dolencias">
+        </mat-form-field>
+    </div>
+   
+    <button mat-raised-button color="primary" (click)="register()">Registarse</button>
+    <a routerLink="/login">inicar sesion</a>
+
+
+
+</form>

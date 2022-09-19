@@ -1,0 +1,47 @@
+<form [formGroup]="fomularioEjercicio">
+    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Tipo</mat-label>
+    <mat-select formControlName="tipo">
+        <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+        {{tipo}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Descripcion</mat-label>
+        <input matInput placeholder="Descripcion" name="descripcion" formControlName="descripcion">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Imagen</mat-label>
+        <input matInput placeholder="Imagen" name="imagen" formControlName="imagen">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Video</mat-label>
+        <input matInput placeholder="Video" name="video" formControlName="video">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Repeticiones</mat-label>
+        <input matInput placeholder="Repeticiones" name="repeticiones" formControlName="repeticiones">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Series</mat-label>
+        <input matInput placeholder="Series" name="series" formControlName="series">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Descanso</mat-label>
+        <input matInput placeholder="Descanso" name="descanso" formControlName="descanso">
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="nuevoEjercicio()">Crear ejercicio</button>
+</form>
