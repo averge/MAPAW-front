@@ -3,12 +3,19 @@
     <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>User Name</mat-label>
     <input matInput placeholder="Enter your name" name="usename" formControlName="user">
+    <mat-error *ngIf="loginForm.controls['user'].errors ">
+        User Name is required
+    </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Password</mat-label>
     <input matInput placeholder="Enter your password" value="" name="password" type="password" formControlName="pass">
-    </mat-form-field>
+<mat-error *ngIf="loginForm.controls['pass'].errors ">
+        Password is required
+    </mat-error>
+      
+</mat-form-field>
     <br>
     <button mat-raised-button color="primary" (click)="login()">Iniciar sesion</button>
     <br>

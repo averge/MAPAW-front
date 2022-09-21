@@ -5,6 +5,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { NuevoejercicioComponent } from '../nuevoejercicio/nuevoejercicio.component';
 import { BloquesComponent } from '../bloques/bloques.component';
 import { NuevoBloqueComponent } from '../nuevo-bloque/nuevo-bloque.component';
+import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -26,7 +28,7 @@ export class HomeComponent implements OnInit {
     zonaMuscular: 'Piernas',
     dificultad: 1,
     materiales: 'Zapatillas',
-    video: 'https://www.youtube.com/embed/npBdpO5B_mQ',
+    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
     d:false
   }, 
   {
@@ -36,7 +38,7 @@ export class HomeComponent implements OnInit {
     zonaMuscular: 'Piernas',
     dificultad: 5,
     materiales: 'Traje de baño',
-    video: 'https://www.youtube.com/embed/npBdpO5B_mQ',
+    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
     d:false
   },
   {
@@ -69,24 +71,41 @@ export class HomeComponent implements OnInit {
     video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
     d:false}];
 
-  public filtroTipo: FormControl = new FormControl()
+  public filtroTipo: FormControl = new FormControl("Todos");
+  public filtroEjercicio: FormControl = new FormControl()
     
-  constructor( private router: Router, public dialog: MatDialog) { }
+  constructor( private router: Router, public dialog: MatDialog, private _sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    for (let i = 0; i < this.ejercicios.length; i++) {
-      //this.ejercicios[i].video=this.embebido(this.ejercicios[i].video);
-    }
     this.ejerciciosValid=this.ejercicios;
   }
   embebido(url:any){
     return url.replace("watch?v=", "embed/");
   }
 
+  verVideo(video:any){
+    return this._sanitizer.bypassSecurityTrustResourceUrl(this.embebido(video));
+  }
+
+  
+  eliminarEjercicio(ejercicio:any){
+    if (window.confirm("Esta seguro que desea eliminar el ejercicio?")) {
+      for (let i = 0; i < this.ejercicios.length; i++) {
+        if(this.ejercicios[i].nombre==ejercicio){
+          this.ejercicios.splice(i,1);
+        }
+     }
+    }     
+  }
   nuevoEjercicio(){
     const dialogRef = this.dialog.open(NuevoejercicioComponent, {
       panelClass: 'js-dialog',  data: { }   
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (!result === true ) return;
+      this.ejercicios.push(result);
+    } );
   }
   verPerfil(){
     this.router.navigate(['/perfil']);
@@ -101,8 +120,10 @@ filtroTipoChange(){
   console.log(this.filtroTipo.value);
   if(this.filtroTipo.value=="Todos"){
     this.ejerciciosValid=this.ejercicios;
+    this.filtroEjercicio.setValue("");
   }else{
     this.ejerciciosValid=this.ejercicios.filter((e:any) => e.tipo === this.filtroTipo.value);
+    this.buscarEjercicio()
   }
 }
 nuevoBloque(){
@@ -115,5 +136,21 @@ verBloque(){
   const dialogRef = this.dialog.open(BloquesComponent, {
     panelClass: 'js-dialog',  data: { }   
   });
+}
+
+buscarEjercicio(){
+  if(this.filtroEjercicio.value==""){
+    if(this.filtroTipo.value=="Todos"){
+      this.ejerciciosValid=this.ejercicios;
+    }else{
+      this.filtroTipoChange()
+    }
+  }else{
+  if(this.filtroTipo.value != "Todos"){
+    this.ejerciciosValid=this.ejerciciosValid.filter((e:any) => e.nombre.toUpperCase().includes(this.filtroEjercicio.value.toUpperCase()));  
+  }else{
+    this.ejerciciosValid=this.ejercicios.filter((e:any) => e.nombre.toUpperCase().includes(this.filtroEjercicio.value.toUpperCase())); 
+  }
+}
 }
 }

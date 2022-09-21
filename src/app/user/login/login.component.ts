@@ -23,8 +23,10 @@ export class LoginComponent implements OnInit {
 
 
   login() {
+    if( this.loginForm.valid ){
     console.log(this.loginForm, this.password);
     this.router.navigate(['/profesor']);
+    }
   }
   register() {
     console.log('register');

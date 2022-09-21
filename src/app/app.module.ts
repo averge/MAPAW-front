@@ -26,6 +26,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { BloquesComponent } from './profesor/bloques/bloques.component';
 import { NuevoBloqueComponent } from './profesor/nuevo-bloque/nuevo-bloque.component';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,

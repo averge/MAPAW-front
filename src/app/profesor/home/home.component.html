@@ -1,3 +1,4 @@
+
 <div style="float: right; margin-right: 5%;">
     <a  routerLink="/perfil"> hola juan</a>
     <i class="material-icons">person</i>
@@ -48,7 +49,12 @@
   <mat-option value="Anaerobico">Anaerobico</mat-option>
   <mat-option value="Mixto">Mixto</mat-option>
 </mat-select>
+
 </mat-form-field>
+
+  <mat-label>Filtro</mat-label>
+<input mat-input placeholder="Buscar" (keyup)="buscarEjercicio()" [formControl]="filtroEjercicio">
+
 <br>
 
 
@@ -72,9 +78,9 @@
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
 
-                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" src="https://www.youtube.com/embed/npBdpO5B_mQ" frameborder="0" allowfullscreen></iframe>
-
-                    <button mat-raised-button color="warn"  *ngIf="e.d" style="grid-row:auto;
+                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
+                                      
+                    <button mat-raised-button color="warn" (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
               </div>
                    </div>
@@ -97,8 +103,9 @@
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
+                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
 
-                      <button mat-raised-button color="warn"  *ngIf="e.d" style="grid-row:auto;
+                      <button mat-raised-button color="warn"  (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
               </div>
         </div>
@@ -119,8 +126,9 @@
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
+                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
 
-                      <button mat-raised-button color="warn"  *ngIf="e.d" style="grid-row:auto;
+                      <button mat-raised-button color="warn"  (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
               </div>
         </div>

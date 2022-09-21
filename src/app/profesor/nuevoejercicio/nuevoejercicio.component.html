@@ -1,3 +1,5 @@
+
+<mat-card>
 <form [formGroup]="fomularioEjercicio">
     <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Tipo</mat-label>
@@ -11,37 +13,54 @@
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Nombre</mat-label>
         <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
+        <mat-error *ngIf="fomularioEjercicio.controls['nombre'].hasError('required')">
+            El nombre es obligatorio
+        </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Descripcion</mat-label>
         <input matInput placeholder="Descripcion" name="descripcion" formControlName="descripcion">
+        <mat-error *ngIf="fomularioEjercicio.controls['descripcion'].hasError('required')">
+            La descripcion es obligatoria
+        </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Imagen</mat-label>
-        <input matInput placeholder="Imagen" name="imagen" formControlName="imagen">
+        <mat-label>Video de YouYube</mat-label>
+        <input matInput placeholder="Video"  name="video" formControlName="video">
+        
+    </mat-form-field><p style="color: red" *ngIf="videoErro"> El video tiene un fomato invalido</p>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Repeticiones o tiempo</mat-label>
+        <input matInput placeholder="Repeticiones" name="repeticiones" formControlName="duracion">
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Video</mat-label>
-        <input matInput placeholder="Video" name="video" formControlName="video">
+        <mat-label>Zona muscular</mat-label>
+        <input matInput placeholder="Zona muscular" name="Zona muscular" formControlName="zonaMuscular">
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Repeticiones</mat-label>
-        <input matInput placeholder="Repeticiones" name="repeticiones" formControlName="repeticiones">
+        <mat-label>Dificultad</mat-label>
+        <mat-select formControlName="dificultad">
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5</mat-option>
+        </mat-select>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Series</mat-label>
-        <input matInput placeholder="Series" name="series" formControlName="series">
+        <mat-label>Materiales necesarios</mat-label>
+        <input matInput placeholder="Materiales necesarios" name="Materiales necesarios" formControlName="materiales">
     </mat-form-field>
     <br>
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Descanso</mat-label>
-        <input matInput placeholder="Descanso" name="descanso" formControlName="descanso">
-    </mat-form-field>
-    <br>
+        
+
     <button mat-raised-button color="primary" (click)="nuevoEjercicio()">Crear ejercicio</button>
+    <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
 </form>
+</mat-card>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -23,12 +24,19 @@ esProfesor = false;
     dolencias: new FormControl(''),
 
   });
-  constructor() { }
+  constructor(private router: Router,) { }
 
   ngOnInit(): void {
   }
   register() {
-    console.log(this.registerForm);
+    if( this.registerForm.valid ){
+      console.log(this.registerForm);
+      this.router.navigate(['/login']);
+    }
+  }
+
+  iniciarSesion(){
+    this.router.navigate(['/login']);
   }
 
   validateTelefono(){
