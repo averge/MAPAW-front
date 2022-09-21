@@ -80,9 +80,10 @@
 
                     <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
                                       
-                    <button mat-raised-button color="warn" (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
-                      grid-column: 2/6;">Eliminar ejercicio</button>
-              </div>
+                    <button mat-raised-button color="warn" (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Eliminar ejercicio</button>
+                    <button mat-raised-button color="primary" (click)="editarEjercicio(e)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Editar ejercicio</button>
+              
+                  </div>
                    </div>
         <div *ngIf="e.tipo=='Anaerobico'">
             <div class="card_e card-2">
@@ -107,6 +108,8 @@
 
                       <button mat-raised-button color="warn"  (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
+                    <button mat-raised-button color="primary" (click)="editarEjercicio(e)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Editar ejercicio</button>
+
               </div>
         </div>
         <div *ngIf="e.tipo=='Mixto'">
@@ -130,6 +133,8 @@
 
                       <button mat-raised-button color="warn"  (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
+                    <button mat-raised-button color="primary" (click)="editarEjercicio(e)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Editar ejercicio</button>
+
               </div>
         </div>
     </div>
@@ -141,41 +146,49 @@
   <br>
 <button mat-raised-button color="secundary" (click)="nuevoBloque()">Agregar Nuevo Bloque</button>
 
-<section class="page-contain">
-  <button (click)="verBloque()" class="data-card">
-    <h3>1</h3>
-    <h4>entrada en calor</h4>
-    <p>Ejercicios para empezar el entrenamiento</p>
-    <span class="link-text">
-      Ver ejercicios
-      <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"/>
-</svg>
-    </span>
-  </button>
-  <button (click)="verBloque()" class="data-card">
-    <h3>2</h3>
-    <h4>Fuerza</h4>
-    <p>Ejercicios para musculacion</p>
-    <span class="link-text">
-      ver ejercicios
-      <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"/>
-</svg>
-    </span>
-  </button>
-  <button (click)="verBloque()" class="data-card">
-    <h3>1</h3>
-    <h4>entrada en calor</h4>
-    <p>Ejercicios para empezar el entrenamiento</p>
-    <span class="link-text">
-      Ver ejercicios
-      <svg width="25" height="16" viewBox="0 0 25 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M17.8631 0.929124L24.2271 7.29308C24.6176 7.68361 24.6176 8.31677 24.2271 8.7073L17.8631 15.0713C17.4726 15.4618 16.8394 15.4618 16.4489 15.0713C16.0584 14.6807 16.0584 14.0476 16.4489 13.657L21.1058 9.00019H0.47998V7.00019H21.1058L16.4489 2.34334C16.0584 1.95281 16.0584 1.31965 16.4489 0.929124C16.8394 0.538599 17.4726 0.538599 17.8631 0.929124Z" fill="#753BBD"/>
-</svg>
-    </span>
-  </button>
-</section>
+  <div class="card">
+      <div class="card-header"
+    style="background-image: url(https://www.google.com/imgres?imgurl=https%3A%2F%2Feurofitness.com%2Fwp-content%2Fuploads%2F2020%2F03%2FCu%25C3%25A1l-es-la-mejor-hora-para-ir-al-gym-y-por-qu%25C3%25A9.jpg&imgrefurl=https%3A%2F%2Feurofitness.com%2Fblog-deportes%2Fcual-es-la-mejor-hora-para-ir-al-gym-y-por-que%2F&tbnid=oorjumQWJ1cDcM&vet=12ahUKEwih4Y_S8aT6AhU0tpUCHV-JBtgQMygSegUIARCOAg..i&docid=alYj0VlW3XXMpM&w=1000&h=667&q=gym%20image&client=safari&ved=2ahUKEwih4Y_S8aT6AhU0tpUCHV-JBtgQMygSegUIARCOAg)"
+      >
+            <div class="card-header-bar">
+              <button (click)="eliminarBloque()" class="btn-message"><span class="sr-only">Message</span></button>
+              <a href="#" class="btn-menu"><span class="sr-only">Menu</span></a>
+            </div>
+
+            <div class="card-header-slanted-edge">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path class="polygon" d="M-20,200,1000,0V200Z" /></svg>
+                <a href="#" class="btn-follow"><span class="sr-only">Follow</span></a>
+            </div>
+      </div>
+
+      <div class="card-body">
+          <h2 class="name">Entrada en calor</h2>
+          <h4 class="job-title">hecha por profe Juan</h4>
+          <div class="bio">Bloque de entrada en calor simple</div>
+          <div class="social-accounts">
+            <!--<a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/dribbble.svg" alt=""><span class="sr-only">Dribbble</span></a>
+            <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/twitter.svg" alt=""><span class="sr-only">Twitter</span></a>
+            <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/instagram.svg" alt=""><span class="sr-only">Instagram</span></a> -->
+          </div>
+      </div>
+
+      <div class="card-footer">
+          <div class="stats">
+              <div class="stat">
+                <span class="label">Tiempo total</span>
+                <span class="value">10'</span>
+              </div>
+              <div class="stat">
+                <span class="label">Dificultad</span>
+                <span class="value">1</span>
+              </div>
+              <div class="stat">
+                <span class="label">N° ejercicios</span>
+                <span class="value">5</span>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 
 <div>

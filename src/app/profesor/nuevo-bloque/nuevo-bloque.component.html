@@ -1,1 +1,23 @@
-Estoy en neuvo bloque
+<mat-card>
+    <form [formGroup]="formBloque">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
+            <mat-error *ngIf="formBloque.controls['nombre'].hasError('required')">
+                El nombre es obligatorio
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Descripcion</mat-label>
+            <input matInput placeholder="Descripcion" name="descripcion" formControlName="descripcion">
+            <mat-error *ngIf="formBloque.controls['descripcion'].hasError('required')">
+                La descripcion es obligatoria
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" (click)="guardarBloque()">Crear bloque</button>
+        <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
+        </form>
+    
+        </mat-card>

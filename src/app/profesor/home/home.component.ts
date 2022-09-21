@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
     descripcion: 'Correr 15 minutos',
     zonaMuscular: 'Piernas',
     dificultad: 1,
+    duracion: "15 minutos",
     materiales: 'Zapatillas',
     video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
     d:false
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
     descripcion: 'Nadar 15 minutos',
     zonaMuscular: 'Piernas',
     dificultad: 5,
+    duracion: "15 minutos",
     materiales: 'Traje de baño',
     video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
     d:false
@@ -48,6 +50,7 @@ export class HomeComponent implements OnInit {
     zonaMuscular: 'Piernas',
     d:false,
     dificultad: 4,
+    duracion: "15 minutos",
     materiales: 'Banco',
     video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',},
     {
@@ -56,6 +59,7 @@ export class HomeComponent implements OnInit {
       descripcion: '15 abdominales',
       zonaMuscular: 'Abdomen',
       dificultad: 5,
+      duracion: "15 minutos",
       materiales: 'Ninguno',
       video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
       d:false
@@ -67,10 +71,33 @@ export class HomeComponent implements OnInit {
     descripcion: '15 abdominales',
     zonaMuscular: 'Abdomen',
     dificultad: 5,
+    duracion: "15 minutos",
     materiales: 'Ninguno',
     video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
     d:false}];
 
+  
+
+  bloque= {nombre: 'Bloque 1', ejercicios: [{
+    tipo: 'Aerobico',
+    nombre: 'Correr',
+    descripcion: 'Correr 15 minutos',
+    zonaMuscular: 'Piernas',
+    dificultad: 1,
+    duracion: "15 minutos",
+    materiales: 'Zapatillas',
+    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
+    d:false
+  }, {
+    tipo: 'Mixto',
+    nombre: 'Abdominales',
+    descripcion: '15 abdominales',
+    zonaMuscular: 'Abdomen',
+    dificultad: 5,
+    duracion: "15 minutos",
+    materiales: 'Ninguno',
+    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
+    d:false}]};
   public filtroTipo: FormControl = new FormControl("Todos");
   public filtroEjercicio: FormControl = new FormControl()
     
@@ -115,6 +142,26 @@ export class HomeComponent implements OnInit {
     return new Array(i);
 }
 
+editarEjercicio(ejercicio:any){
+  const dialogRef = this.dialog.open(NuevoejercicioComponent, {
+    panelClass: 'js-dialog',  data: {ejercicio}   
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    console.log(result)
+    if (!result === true ) return;
+    for (let i = 0; i < this.ejercicios.length; i++) {
+      if(this.ejercicios[i].nombre==ejercicio.nombre){
+        console.log(this.ejercicios)
+        result.d=false;
+        result.dificultad=parseInt(result.dificultad)
+        this.ejercicios[i]=result;
+        this.ejerciciosValid=this.ejercicios;
+        console.log(this.ejercicios)
+      }
+   }
+  } );
+}
+
 
 filtroTipoChange(){
   console.log(this.filtroTipo.value);
@@ -131,6 +178,8 @@ nuevoBloque(){
     panelClass: 'js-dialog',  data: { }   
   });
 }
+
+
 verBloque(){
   console.log('ver bloque');
   const dialogRef = this.dialog.open(BloquesComponent, {
@@ -152,5 +201,9 @@ buscarEjercicio(){
     this.ejerciciosValid=this.ejercicios.filter((e:any) => e.nombre.toUpperCase().includes(this.filtroEjercicio.value.toUpperCase())); 
   }
 }
+}
+
+eliminarBloque(){
+  window.alert("No se puede eliminar el bloque, ya que tiene ejercicios asignados");
 }
 }

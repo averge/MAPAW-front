@@ -23,6 +23,11 @@ videoErro=false
   constructor(public dialogRef: MatDialogRef<NuevoejercicioComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    if(this.data){
+      this.fomularioEjercicio.patchValue(this.data.ejercicio)
+      this.fomularioEjercicio.controls['dificultad'].setValue(this.data.ejercicio.dificultad.toString())
+    }
   }
 
   nuevoEjercicio() {
