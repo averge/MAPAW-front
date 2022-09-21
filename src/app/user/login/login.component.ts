@@ -14,6 +14,13 @@ export class LoginComponent implements OnInit {
     user: new FormControl('', Validators.required),
     pass: new FormControl('', Validators.required),
   });
+  usuarios = [{
+    user: 'admin',
+    pass: 'admin'
+  },
+  { user: 'profesor',
+    pass: 'profesor'
+  }]
   email = '';
   password = '';
   constructor( private activeoute: ActivatedRoute, private router: Router, public service:UsuarioService ) { }
@@ -24,8 +31,11 @@ export class LoginComponent implements OnInit {
 
   login() {
     if( this.loginForm.valid ){
-    console.log(this.loginForm, this.password);
-    this.router.navigate(['/profesor']);
+      if( this.usuarios.find( usuario => usuario.user == this.loginForm.value.user && usuario.pass == this.loginForm.value.pass ) ){
+        this.router.navigate(['/profesor']);
+      }else{
+        alert('Usuario o contraseña incorrectos');
+      }
     }
   }
   register() {

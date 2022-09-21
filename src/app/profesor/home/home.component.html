@@ -143,7 +143,11 @@
 </div>
 </div>
 <div *ngIf="ver=='bloques'">
-<button mat-raised-button color="secundary" (click)="nuevoBloque()">Agregar Nuevo Bloque</button>
+<br>
+<div class="heading_e">
+  <h1 class="heading__title_e">BLOQUES</h1>
+</div>
+  <button mat-raised-button color="secundary" (click)="nuevoBloque()">Agregar Nuevo Bloque</button>
 
   <br>
 
@@ -158,14 +162,15 @@
 
             <div class="card-header-slanted-edge">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path class="polygon" d="M-20,200,1000,0V200Z" /></svg>
-                <a href="#" class="btn-follow"><span class="sr-only">Follow</span></a>
+              <button (click)="editarBloque(bloque)" class="btn-follow"><span class="sr-only">Follow</span></button>
+            
             </div>
       </div>
 
       <div class="card-body">
           <h2 class="name">Entrada en calor</h2>
-          <h4 class="job-title">hecha por profe Juan</h4>
-          <div class="bio">Bloque de entrada en calor simple</div>
+          <h4 class="job-title">Bloque creado por Juan</h4>
+          <div class="bio">eEntrada en calor simple</div>
           <div class="social-accounts">
             <!--<a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/dribbble.svg" alt=""><span class="sr-only">Dribbble</span></a>
             <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/twitter.svg" alt=""><span class="sr-only">Twitter</span></a>
@@ -203,18 +208,18 @@
     >
           <div class="card-header-bar">
             <button (click)="eliminarBloque(b)" class="btn-message"><span class="sr-only">Message</span></button>
-            <a href="#" class="btn-menu"><span class="sr-only">Menu</span></a>
+            <button (click)="editarBloque(b)" class="btn-menu"><span class="sr-only">Menu</span></button>
           </div>
 
           <div class="card-header-slanted-edge">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path class="polygon" d="M-20,200,1000,0V200Z" /></svg>
-              <a href="#" class="btn-follow"><span class="sr-only">Follow</span></a>
+              <button (click)="editarBloque(b)" class="btn-follow"><span class="sr-only">Follow</span></button>
           </div>
     </div>
 
     <div class="card-body">
         <h2 class="name">{{b.nombre}}</h2>
-        <h4 class="job-title">hecha por profe Juan</h4>
+        <h4 class="job-title">Bloque creado por Juan</h4>
         <div class="bio">{{b.descripcion}}</div>
         <div class="social-accounts">
           <!--<a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/dribbble.svg" alt=""><span class="sr-only">Dribbble</span></a>

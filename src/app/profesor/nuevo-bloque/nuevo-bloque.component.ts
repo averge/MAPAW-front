@@ -73,6 +73,19 @@ export class NuevoBloqueComponent implements OnInit {
   });
   
   ngOnInit(): void {
+    
+    if(this.data.b){
+      console.log(this.data.b);
+      this.formBloque.patchValue(this.data.b);
+      this.ejerciciosList = this.data.b.ejercicios;
+      for (let i = 0; i < this.ejerciciosList.length; i++) {
+        for (let j = 0; j < this.ejercicios.length; j++) {
+          if(this.ejerciciosList[i].nombre == this.ejercicios[j].nombre){
+            this.ejercicios.splice(j,1);
+          }
+        }
+      }
+    }
   }
 
 

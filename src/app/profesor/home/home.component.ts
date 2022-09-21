@@ -238,4 +238,10 @@ eliminarBloque(b:any){
     }
     return dif/b.ejercicios.length;
   }
+
+  editarBloque(b:any){
+    const dialogRef = this.dialog.open(NuevoBloqueComponent, {
+      panelClass: 'js-dialog',  data: {b}   
+    });
+  }
 }
