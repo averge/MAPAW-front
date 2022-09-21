@@ -9,7 +9,7 @@ import { UsuarioService } from '../../servicios/usuario.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+  error=false
   loginForm = new FormGroup({
     user: new FormControl('', Validators.required),
     pass: new FormControl('', Validators.required),
@@ -30,11 +30,12 @@ export class LoginComponent implements OnInit {
 
 
   login() {
+    this.error = false;
     if( this.loginForm.valid ){
       if( this.usuarios.find( usuario => usuario.user == this.loginForm.value.user && usuario.pass == this.loginForm.value.pass ) ){
         this.router.navigate(['/profesor']);
       }else{
-        alert('Usuario o contraseña incorrectos');
+        this.error = true;
       }
     }
   }

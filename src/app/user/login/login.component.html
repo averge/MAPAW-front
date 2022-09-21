@@ -18,6 +18,9 @@
 </mat-form-field>
     <br>
     <button mat-raised-button color="primary" (click)="login()">Iniciar sesion</button>
-    <br>
+    
 <button mat-raised-button color="primary" (click)="register()">Registarse </button>
+<p *ngIf="error">
+    Usuario o contraseña incorrecta
+</p>
     </form>
