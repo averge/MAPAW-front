@@ -1,4 +1,11 @@
+<div mat-dialog-content>
+    
 <mat-card>
+    <mat-card-header>
+        <mat-card-title>Bloque</mat-card-title>
+    </mat-card-header>
+    <mat-card-content >
+        <div>
     <form [formGroup]="formBloque">
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Nombre</mat-label>
@@ -16,8 +23,96 @@
             </mat-error>
         </mat-form-field>
         <br>
+
+        <div class="wrapper">
+  <h3>Ejercicios diponibles</h3>
+            <div class="table">
+              
+              <div class="row green">
+                <div class="cell">
+                  Nombre
+                </div>
+                <div class="cell">
+                  Descripcion
+                </div>
+                <div class="cell">
+                  Dificultad
+                </div>
+                <div class="cell">
+                    Zona muscular
+                  </div><div class="cell">
+                    Agregar
+                  </div>
+              </div>
+              
+              <div class="row" *ngFor="let e of ejercicios">
+                <div class="cell" data-title="Name">
+                  {{e.nombre}}
+                </div>
+                <div class="cell" data-title="Age">
+                  {{e.descripcion}}
+                </div>
+                <div class="cell" data-title="Occupation">
+                  {{e.dificultad}}
+                </div>
+                <div class="cell" data-title="Location">
+                  {{e.zonaMuscular}}
+                </div>
+                <div class="cell" data-title="Location">
+                    <button (click)="agregarEjercicio(e)">+</button>
+                </div>
+              </div>
+            </div>
+              <h3> Ejercicos agregados</h3>
+              <div class="table">
+              
+                <div class="row blue">
+                  <div class="cell">
+                    Nombre
+                  </div>
+                  <div class="cell">
+                    Descripcion
+                  </div>
+                  <div class="cell">
+                    Dificultad
+                  </div>
+                  <div class="cell">
+                      Zona muscular
+                    </div><div class="cell">
+                      Quitar
+                    </div>
+                </div>
+                
+                <div class="row" *ngFor="let e of ejerciciosList">
+                  <div class="cell" data-title="Name">
+                    {{e.nombre}}
+                  </div>
+                  <div class="cell" data-title="Age">
+                    {{e.descripcion}}
+                  </div>
+                  <div class="cell" data-title="Occupation">
+                    {{e.dificultad}}
+                  </div>
+                  <div class="cell" data-title="Location">
+                    {{e.zonaMuscular}}
+                  </div>
+                  <div class="cell" data-title="Location">
+                    <button (click)="eliminarEjercicio(e)">-</button>
+                  </div>
+                </div>
+              </div>
+                
+                
+            </div>  
+            
+            
+        
+          
         <button mat-raised-button color="primary" (click)="guardarBloque()">Crear bloque</button>
         <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
         </form>
-    
+    </div>
+    </mat-card-content>
         </mat-card>
+    </div>
+    

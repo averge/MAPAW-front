@@ -14,6 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
   ver=""
+  bloques:any=[]
   usuarios= [
     {nombre: 'Juan', apellido: 'Perez', edad: 20, sexo: 'Masculino', email: 'jj@jj.com', plan: 2},
     {nombre: 'Laura', apellido: 'Lopez', edad: 15, sexo: 'Femenino', email: 'jj@jj.com', plan: 2},
@@ -177,6 +178,13 @@ nuevoBloque(){
   const dialogRef = this.dialog.open(NuevoBloqueComponent, {
     panelClass: 'js-dialog',  data: { }   
   });
+  dialogRef.afterClosed().subscribe(result => {
+    console.log(result)
+    if (!result === true ) return;
+    this.bloques.push(result);
+    console.log(this.bloques)
+  }
+  );
 }
 
 
@@ -203,7 +211,31 @@ buscarEjercicio(){
 }
 }
 
-eliminarBloque(){
-  window.alert("No se puede eliminar el bloque, ya que tiene ejercicios asignados");
-}
+eliminarBloque(b:any){
+  if (window.confirm("Esta seguro que desea eliminar el bloque?")) {
+    for (let i = 0; i < this.bloques.length; i++) {
+      if(this.bloques[i].nombre==b.nombre){
+        this.bloques.splice(i,1);
+      }
+    }
+  }}
+
+  bSize(b:any){
+    return b.ejercicios.length;
+  }
+  bTime(b:any){
+    let time=0;
+    for (let i = 0; i < b.ejercicios.length; i++) {
+      time+=parseInt(b.ejercicios[i].duracion);
+    }
+    return time;
+  }
+
+  bDificultadPromedio(b:any){
+    let dif=0;
+    for (let i = 0; i < b.ejercicios.length; i++) {
+      dif+=parseInt(b.ejercicios[i].dificultad);
+    }
+    return dif/b.ejercicios.length;
+  }
 }
