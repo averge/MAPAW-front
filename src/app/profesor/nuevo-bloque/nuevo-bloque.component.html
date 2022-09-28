@@ -26,6 +26,10 @@
 
         <div class="wrapper">
   <h3>Ejercicios diponibles</h3>
+  <mat-form-field class="example-form-field" appearance="fill">
+  <mat-label>Buscar ejercicio...</mat-label>
+  <input matInput placeholder="buscar..." (keyup)="buscarEjercicio()"  [formControl]="buscar">
+</mat-form-field>
             <div class="table">
               
               <div class="row green">
@@ -45,7 +49,7 @@
                   </div>
               </div>
               
-              <div class="row" *ngFor="let e of ejercicios">
+              <div class="row" *ngFor="let e of ejerciciosDisponibles">
                 <div class="cell" data-title="Name">
                   {{e.nombre}}
                 </div>
@@ -83,7 +87,7 @@
                     </div>
                 </div>
                 
-                <div class="row" *ngFor="let e of ejerciciosList">
+                <div class="row" *ngFor="let e of ejerciciosSeleccionados">
                   <div class="cell" data-title="Name">
                     {{e.nombre}}
                   </div>

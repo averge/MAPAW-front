@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/servicios/auth.service';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -18,10 +19,19 @@ export class PerfilComponent implements OnInit {
     plan: '1',
     dolencias: 'ninguna',
   };
+  actualUser=this.auth.actualUser;
 
-  constructor() { }
+  constructor( private router: Router,private auth:AuthService) { }
 
   ngOnInit(): void {
+  }
+  cerrarSesion(){
+    this.actualUser=null;
+    this.auth.actualUser=null;
+    this.router.navigate(['/login']);
+  }
+  volver(){
+    this.router.navigate(['/profesor']);
   }
 
 }

@@ -9,108 +9,72 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class NuevoBloqueComponent implements OnInit {
 
-  ejerciciosList:any = [];
-  ejercicios= [{
-    tipo: 'Aerobico',
-    nombre: 'Correr',
-    descripcion: 'Correr 15 minutos',
-    zonaMuscular: 'Piernas',
-    dificultad: 1,
-    duracion: "15 minutos",
-    materiales: 'Zapatillas',
-    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
-    d:false
-  }, 
-  {
-    tipo: 'Aerobico',
-    nombre: 'Nadar',
-    descripcion: 'Nadar 15 minutos',
-    zonaMuscular: 'Piernas',
-    dificultad: 5,
-    duracion: "15 minutos",
-    materiales: 'Traje de baño',
-    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
-    d:false
-  },
-  {
-    tipo: 'Anaerobico',
-    nombre: 'Sentadillas',
-    descripcion: '15 sentadillas',
-    zonaMuscular: 'Piernas',
-    d:false,
-    dificultad: 4,
-    duracion: "15 minutos",
-    materiales: 'Banco',
-    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',},
-    {
-      tipo: 'Mixto',
-      nombre: 'Abdominales',
-      descripcion: '15 abdominales',
-      zonaMuscular: 'Abdomen',
-      dificultad: 5,
-      duracion: "15 minutos",
-      materiales: 'Ninguno',
-      video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
-      d:false
-    },
-  
-  {
-    tipo: 'Mixto',
-    nombre: 'Abdominales',
-    descripcion: '15 abdominales',
-    zonaMuscular: 'Abdomen',
-    dificultad: 5,
-    duracion: "15 minutos",
-    materiales: 'Ninguno',
-    video: 'https://www.youtube.com/watch?v=1Q8fG0TtVAY',
-    d:false}];
+  ejerciciosSeleccionados: any[] = [];
+  todosLosEjercicios=this.data.e
+  ejerciciosDisponibles=this.data.e
+  guardado:any=[]
 
-  constructor(public dialogRef: MatDialogRef<NuevoBloqueComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  constructor(public dialogRef: MatDialogRef<NuevoBloqueComponent>, @Inject(MAT_DIALOG_DATA) private data: any) { }
+  
   formBloque = new FormGroup({
-    nombre: new FormControl('', Validators.required),
-    descripcion: new FormControl('', Validators.required),
-    ejercicios: new FormControl(''),
+     nombre: new FormControl('', Validators.required),
+     descripcion: new FormControl('', Validators.required),
+     ejercicios: new FormControl(''),
   });
+  public buscar: FormControl = new FormControl("");
+  
   
   ngOnInit(): void {
-    
     if(this.data.b){
-      console.log(this.data.b);
-      this.formBloque.patchValue(this.data.b);
-      this.ejerciciosList = this.data.b.ejercicios;
-      for (let i = 0; i < this.ejerciciosList.length; i++) {
-        for (let j = 0; j < this.ejercicios.length; j++) {
-          if(this.ejerciciosList[i].nombre == this.ejercicios[j].nombre){
-            this.ejercicios.splice(j,1);
-          }
-        }
+      for (let i = 0; i < this.data.b.ejercicios.length; i++) {
+        this.guardado.push(this.data.b.ejercicios[i])
       }
+      this.formBloque.setValue(this.data.b);
+      this.ejerciciosSeleccionados = this.data.b.ejercicios;
+      this.ejerciciosDisponibles = this.data.e.filter((ejercicio: { nombre: any; }) => !this.ejerciciosSeleccionados.some((ejercicioSeleccionado: { nombre: any; }) => ejercicioSeleccionado.nombre === ejercicio.nombre));
     }
   }
 
+  buscarEjercicio(){
+    if(this.buscar.value == ''){
+      this.ejerciciosDisponibles = this.data.e.filter((ejercicio: { nombre: any; }) => !this.ejerciciosSeleccionados.some((ejercicioSeleccionado: { nombre: any; }) => ejercicioSeleccionado.nombre === ejercicio.nombre));
+    }else{
+      this.ejerciciosDisponibles = this.data.e.filter((ejercicio: { nombre: any; }) => !this.ejerciciosSeleccionados.some((ejercicioSeleccionado: { nombre: any; }) => ejercicioSeleccionado.nombre === ejercicio.nombre) && ejercicio.nombre.toLowerCase().includes(this.buscar.value.toLowerCase()));
+    }
+  
+  }
 
   guardarBloque(){
-    if(this.ejerciciosList.length > 1){
-      this.formBloque.value.ejercicios = this.ejerciciosList;
+    if(this.ejerciciosSeleccionados.length > 1){
+      this.formBloque.value.ejercicios = this.ejerciciosSeleccionados;
       if (this.formBloque.valid) {
-        console.log(this.formBloque.value);
         this.dialogRef.close(this.formBloque.value);
       }
   }}
 
   cancelar(){
+    if (this.data.b){
+      this.data.b.ejercicios = this.guardado;
+    }
     this.dialogRef.close(false);
-    console.log('cancelar');
   }
 
-  agregarEjercicio(ejercicio: any){
-
-    this.ejerciciosList.push(ejercicio);
-    this.ejercicios.splice(this.ejercicios.indexOf(ejercicio),1);
+  agregarEjercicio(e: any){
+    this.ejerciciosSeleccionados.push(e);
+    this.ejerciciosDisponibles = this.ejerciciosDisponibles.filter((ejercicio: { nombre: any; }) => !this.ejerciciosSeleccionados.some((ejercicioSeleccionado: { nombre: any; }) => ejercicioSeleccionado.nombre === ejercicio.nombre));
+    this.buscar.setValue('');
+    this.buscarEjercicio();
   }
 
   eliminarEjercicio(ejercicio: any){
-    this.ejercicios.push(ejercicio);
-    this.ejerciciosList.splice(this.ejerciciosList.indexOf(ejercicio),1);
+    this.ejerciciosDisponibles.push(ejercicio);
+    this.ejerciciosSeleccionados = this.ejerciciosSeleccionados.filter((ejercicioSeleccionado: { nombre: any; }) => ejercicioSeleccionado.nombre !== ejercicio.nombre);
+
   }
+
+  onNoClick(): void {    
+    this.cancelar();
+  }
+
 }

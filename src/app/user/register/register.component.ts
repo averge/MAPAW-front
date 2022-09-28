@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,6 @@ esProfesor = false;
     nombre: new FormControl('', Validators.required),
     apellido: new FormControl('', Validators.required),
     fechaNacieminto: new FormControl('', Validators.required),
-    sexo: new FormControl('', Validators.required),
     telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(7)]),
     dni: new FormControl('', [Validators.required, Validators.minLength(7)]),
     rol: new FormControl('A', Validators.required),
@@ -24,13 +24,17 @@ esProfesor = false;
     dolencias: new FormControl(''),
 
   });
-  constructor(private router: Router,) { }
+  constructor(private router: Router,private auth:AuthService) { }
 
   ngOnInit(): void {
   }
   register() {
+    console.log('register');
+    console.log(this.registerForm.value);
+    console.log(this.registerForm.valid);
     if( this.registerForm.valid ){
       console.log(this.registerForm);
+      this.auth.sharingValue = this.registerForm.value;
       this.router.navigate(['/login']);
     }
   }

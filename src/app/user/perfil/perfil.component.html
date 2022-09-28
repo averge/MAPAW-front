@@ -1,7 +1,12 @@
-
-<a routerLink="/profesor">back</a>
-<h2>Hola este es el perfil de Juan</h2>
+<div style="float: right; margin-right: 5%;">
+    <button (click)="cerrarSesion()">cerrar sesion</button>
+    <i class="material-icons">person</i>
+</div>
+<button (click)="volver()">Volver</button>
+<h2>Hola este es el perfil de {{actualUser.nombre}}</h2>
 <p>
     <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="width:200px">
-    
 </p>
+<h3>{{actualUser.nombre}} {{actualUser.apellido}}</h3>
+<h3>{{actualUser.email}}</h3>
+<h3>{{actualUser.telefono}}</h3>

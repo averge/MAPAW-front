@@ -1,18 +1,19 @@
 
 <div style="float: right; margin-right: 5%;">
-    <a  routerLink="/perfil"> hola juan</a>
+    <button (click)="cerrarSesion()">cerrar sesion</button>
+    <a  routerLink="/perfil"> hola {{usuarioActual.nombre}}</a>
     <i class="material-icons">person</i>
 </div>
 <h1 class="heading__title_e">Home Profesor</h1>
-<button mat-raised-button color="primary" (click)="ver='alumnos'">Alumnos</button>
-<button mat-raised-button color="primary" (click)="ver='ejercicios'">Ejercicios</button>
-<button mat-raised-button color="primary" (click)="ver='bloques'">Bloques</button>
+<button mat-raised-button color="primary" style="margin: 2%;" (click)="ver='alumnos'">Alumnos</button>
+<button mat-raised-button color="primary" style="margin: 2%;" (click)="ver='ejercicios'">Ejercicios</button>
+<button mat-raised-button color="primary" style="margin: 2%;" (click)="ver='bloques'">Bloques</button>
 
 <i class="material-icons">sports_gymnastics</i>
 
 <div *ngIf="ver=='alumnos'">
     <div class="heading_e">
-        <h1 class="heading__title_e">Alumnos</h1>
+        <h1 class="heading__title_e">ALUMNOS</h1>
       </div>
   <ul class="cards">
     <li *ngFor="let user of usuarios">
@@ -37,10 +38,12 @@
 
 <div class="main-containe_e">
   <div class="heading_e">
-    <h1 class="heading__title_e">Ejercicios</h1>
+    <h1 class="heading__title_e">EJERCICIOS</h1>
   </div>
   <br>
-<button mat-raised-button color="secundary" (click)="nuevoEjercicio()">Agregar Nuevo Ejercicio</button>
+<button mat-raised-button style="background: rgb(4, 209, 4);" (click)="nuevoEjercicio()">Agregar Nuevo Ejercicio</button>
+<div *ngIf="!sinEjercicios" style="text-align:center;
+align:center;">
 <mat-form-field class="example-full-width" appearance="fill">
   <mat-label>Filtro</mat-label>
 <mat-select (selectionChange)="filtroTipoChange()" [formControl]="filtroTipo">
@@ -52,10 +55,13 @@
 
 </mat-form-field>
 
-  <mat-label>Filtro</mat-label>
-<input mat-input placeholder="Buscar" (keyup)="buscarEjercicio()" [formControl]="filtroEjercicio">
+  
+<input style="font-size: 2rem;text-align:center; align:center; margin: 2%;" mat-input placeholder="Buscar..." (keyup)="buscarEjercicio()" [formControl]="filtroEjercicio">
 
 <br>
+</div>
+<h2 *ngIf="sinEjercicios" >No hay ejercicios</h2>
+
 
 
   <div class="cards_e">
@@ -78,8 +84,8 @@
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
 
-                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
-                                      
+                    <iframe *ngIf="e.d && e.video!=''" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
+                    <h3  *ngIf="e.d && e.video==''" class="card__description_e" >El ejercicio no tiene video</h3> 
                     <button mat-raised-button color="warn" (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Eliminar ejercicio</button>
                     <button mat-raised-button color="primary" (click)="editarEjercicio(e)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Editar ejercicio</button>
               
@@ -104,8 +110,9 @@
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
-                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
-
+                    <iframe *ngIf="e.d && e.video!=''" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
+                    <h3  *ngIf="e.d && e.video==''" class="card__description_e" >El ejercicio no tiene video</h3> 
+                    
                       <button mat-raised-button color="warn"  (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
                     <button mat-raised-button color="primary" (click)="editarEjercicio(e)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Editar ejercicio</button>
@@ -129,8 +136,9 @@
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.descripcion}}</h3>
                       <h3  *ngIf="e.d" class="card__description_e" >{{e.zonaMuscular}}</h3>
                     <h3  *ngIf="e.d" class="card__description_e" >{{e.materiales}}</h3>
-                    <iframe *ngIf="e.d" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
-
+                    <iframe *ngIf="e.d && e.video!=''" class="card__description_e" width="95%" min-height="200"  height="315" [src]='verVideo(e.video)' frameborder="0" allowfullscreen></iframe>
+                    <h3  *ngIf="e.d && e.video==''" class="card__description_e" >El ejercicio no tiene video</h3> 
+                    
                       <button mat-raised-button color="warn"  (click)="eliminarEjercicio(e.nombre)" *ngIf="e.d" style="grid-row:auto;
                       grid-column: 2/6;">Eliminar ejercicio</button>
                     <button mat-raised-button color="primary" (click)="editarEjercicio(e)" *ngIf="e.d" style="grid-row:auto; grid-column: 2/6;">Editar ejercicio</button>
@@ -147,10 +155,11 @@
 <div class="heading_e">
   <h1 class="heading__title_e">BLOQUES</h1>
 </div>
-  <button mat-raised-button color="secundary" (click)="nuevoBloque()">Agregar Nuevo Bloque</button>
+  <button mat-raised-button style="background: rgb(4, 209, 4);" (click)="nuevoBloque()">Agregar Nuevo Bloque</button>
+  <h2 *ngIf="sinBloques">No hay bloques</h2>
 
   <br>
-
+<!--
   <div class="card">
       <div class="card-header"
     style="background-image: url(https://www.google.com/imgres?imgurl=https%3A%2F%2Feurofitness.com%2Fwp-content%2Fuploads%2F2020%2F03%2FCu%25C3%25A1l-es-la-mejor-hora-para-ir-al-gym-y-por-qu%25C3%25A9.jpg&imgrefurl=https%3A%2F%2Feurofitness.com%2Fblog-deportes%2Fcual-es-la-mejor-hora-para-ir-al-gym-y-por-que%2F&tbnid=oorjumQWJ1cDcM&vet=12ahUKEwih4Y_S8aT6AhU0tpUCHV-JBtgQMygSegUIARCOAg..i&docid=alYj0VlW3XXMpM&w=1000&h=667&q=gym%20image&client=safari&ved=2ahUKEwih4Y_S8aT6AhU0tpUCHV-JBtgQMygSegUIARCOAg)"
@@ -172,9 +181,9 @@
           <h4 class="job-title">Bloque creado por Juan</h4>
           <div class="bio">eEntrada en calor simple</div>
           <div class="social-accounts">
-            <!--<a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/dribbble.svg" alt=""><span class="sr-only">Dribbble</span></a>
+            <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/dribbble.svg" alt=""><span class="sr-only">Dribbble</span></a>
             <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/twitter.svg" alt=""><span class="sr-only">Twitter</span></a>
-            <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/instagram.svg" alt=""><span class="sr-only">Instagram</span></a> -->
+            <a href="#"><img src="https://res.cloudinary.com/dj14cmwoz/image/upload/v1491077480/profile-card/images/instagram.svg" alt=""><span class="sr-only">Instagram</span></a> 
           </div>
       </div>
 
@@ -201,7 +210,7 @@
 
 
 
-
+-->
   <div class="card" *ngFor="let b of bloques">
     <div class="card-header"
   style="background-image: url(https://www.google.com/imgres?imgurl=https%3A%2F%2Feurofitness.com%2Fwp-content%2Fuploads%2F2020%2F03%2FCu%25C3%25A1l-es-la-mejor-hora-para-ir-al-gym-y-por-qu%25C3%25A9.jpg&imgrefurl=https%3A%2F%2Feurofitness.com%2Fblog-deportes%2Fcual-es-la-mejor-hora-para-ir-al-gym-y-por-que%2F&tbnid=oorjumQWJ1cDcM&vet=12ahUKEwih4Y_S8aT6AhU0tpUCHV-JBtgQMygSegUIARCOAg..i&docid=alYj0VlW3XXMpM&w=1000&h=667&q=gym%20image&client=safari&ved=2ahUKEwih4Y_S8aT6AhU0tpUCHV-JBtgQMygSegUIARCOAg)"

@@ -19,19 +19,21 @@ export class NuevoejercicioComponent implements OnInit {
     materiales: new FormControl(''),
     video: new FormControl(''),
   });
+  dificultades = [1,2,3,4,5];
 videoErro=false
+nombreError=false
   constructor(public dialogRef: MatDialogRef<NuevoejercicioComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     console.log(this.data);
-    if(this.data){
+    if(this.data.ejercicio){
       this.fomularioEjercicio.patchValue(this.data.ejercicio)
-      this.fomularioEjercicio.controls['dificultad'].setValue(this.data.ejercicio.dificultad.toString())
+      this.fomularioEjercicio.controls['dificultad'].setValue(this.data.ejercicio.dificultad)
     }
   }
 
   nuevoEjercicio() {
-    if(this.fomularioEjercicio.valid){
+    if(this.fomularioEjercicio.valid && !this.nombreError){
       if(this.fomularioEjercicio.value.video != ''){
         if(!this.fomularioEjercicio.value.video.includes('https://www.youtube.com/watch?v=')){
           this.videoErro=true
@@ -39,6 +41,7 @@ videoErro=false
           console.log('video invalido');
         }
       else{
+        console.log(this.fomularioEjercicio.value);
         this.dialogRef.close(this.fomularioEjercicio.value);
       }
     }
@@ -50,7 +53,17 @@ videoErro=false
       
   }}
 
-  cancelar(){
+  verficarNombre(){
+    if(this.data.nombresEjercicios.includes(this.fomularioEjercicio.controls['nombre'].value.toUpperCase())){
+      this.nombreError=true
+    }else{
+      this.nombreError=false
+    }
+  }
+
+  
+  
+    cancelar(){
     this.dialogRef.close(false);
     console.log('cancelar');
   }

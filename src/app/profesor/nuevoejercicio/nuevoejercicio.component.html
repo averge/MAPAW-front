@@ -1,7 +1,14 @@
+<div  mat-dialog-content style="width: 100%;">
+    
+    <mat-card style="width: 100%;">
+        <mat-card-header>
+            <mat-card-title *ngIf="!data.ejercicio" style="font-size: 30px;">Nuevo ejercicio</mat-card-title>
+            <mat-card-title *ngIf="data.ejercicio" style="font-size: 30px;">Editar ejercicio</mat-card-title>
 
-<mat-card>
-
-<form [formGroup]="fomularioEjercicio">
+        </mat-card-header>
+        <mat-card-content >
+            <br>
+<form [formGroup]="fomularioEjercicio" >
     <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Tipo</mat-label>
     <mat-select formControlName="tipo">
@@ -13,15 +20,17 @@
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre" name="nombre" formControlName="nombre">
+        <input (keyup)="verficarNombre()" matInput placeholder="Nombre" name="nombre" formControlName="nombre" style="width: 300px;">
         <mat-error *ngIf="fomularioEjercicio.controls['nombre'].hasError('required')">
             El nombre es obligatorio
         </mat-error>
-    </mat-form-field>
+        
+    </mat-form-field><p style="color: red" *ngIf="nombreError">Ya existe ejercicio con ese nombre</p>
+
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Descripcion</mat-label>
-        <input matInput placeholder="Descripcion" name="descripcion" formControlName="descripcion">
+        <textarea matInput placeholder="Descripcion" name="descripcion" formControlName="descripcion"></textarea>
         <mat-error *ngIf="fomularioEjercicio.controls['descripcion'].hasError('required')">
             La descripcion es obligatoria
         </mat-error>
@@ -46,11 +55,7 @@
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Dificultad</mat-label>
         <mat-select formControlName="dificultad">
-            <mat-option value="1">1</mat-option>
-            <mat-option value="2">2</mat-option>
-            <mat-option value="3">3</mat-option>
-            <mat-option value="4">4</mat-option>
-            <mat-option value="5">5</mat-option>
+            <mat-option *ngFor="let d of dificultades" [value]="d">{{d}}</mat-option>
         </mat-select>
     </mat-form-field>
     <br>
@@ -61,7 +66,10 @@
     <br>
         
 
-    <button mat-raised-button color="primary" (click)="nuevoEjercicio()">Crear ejercicio</button>
+    <button *ngIf="!this.data.ejercicio" mat-raised-button color="primary" (click)="nuevoEjercicio()">Crear ejercicio</button>
+    <button *ngIf="this.data.ejercicio" mat-raised-button color="primary" (click)="nuevoEjercicio()">Guardar cambio</button>
     <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
 </form>
-</mat-card>
+        </mat-card-content>
+    </mat-card>
+</div>
