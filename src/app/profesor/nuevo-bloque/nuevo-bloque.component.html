@@ -1,8 +1,13 @@
+<h1 *ngIf="data.b" style="font-size: 30px;"> Editar bloque</h1>
+<h1 *ngIf="!data.b" style="font-size: 30px;"> Nuevo bloque</h1>
 <div mat-dialog-content>
-    
 <mat-card>
+  <button (click)="cancelar()" style="float: right;" mat-button >X</button>
+
     <mat-card-header>
-        <mat-card-title>Bloque</mat-card-title>
+        
+        <mat-card-title *ngIf="data.b" style="font-size: 30px;"> Editar bloque</mat-card-title>
+        <mat-card-title *ngIf="!data.b" style="font-size: 30px;"> Nuevo bloque</mat-card-title>
     </mat-card-header>
     <mat-card-content >
         <div>
@@ -25,7 +30,7 @@
         <br>
 
         <div class="wrapper">
-  <h3>Ejercicios diponibles</h3>
+  <h2>Ejercicios diponibles para agregar al bloque</h2>
   <mat-form-field class="example-form-field" appearance="fill">
   <mat-label>Buscar ejercicio...</mat-label>
   <input matInput placeholder="buscar..." (keyup)="buscarEjercicio()"  [formControl]="buscar">
@@ -67,7 +72,7 @@
                 </div>
               </div>
             </div>
-              <h3> Ejercicos agregados</h3>
+              <h2> Ejercicos agregados al bloque </h2>
               <div class="table">
               
                 <div class="row blue">
@@ -111,10 +116,12 @@
             
             
         
-          
-        <button mat-raised-button color="primary" (click)="guardarBloque()">Crear bloque</button>
+        <button  *ngIf="data.b" mat-raised-button color="primary" (click)="guardarBloque()">Editar bloque</button>
+        <button *ngIf="!data.b" mat-raised-button color="primary" (click)="guardarBloque()">Crear bloque</button>
         <button mat-raised-button color="warn" (click)="cancelar()">Cancelar</button>
         </form>
+      <p style="color: red" *ngIf="errorBloque">El bloque debe tener <strong>DOS</strong> ejercicio como minimo</p>
+
     </div>
     </mat-card-content>
         </mat-card>

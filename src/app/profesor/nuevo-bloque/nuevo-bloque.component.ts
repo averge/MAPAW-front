@@ -13,9 +13,9 @@ export class NuevoBloqueComponent implements OnInit {
   todosLosEjercicios=this.data.e
   ejerciciosDisponibles=this.data.e
   guardado:any=[]
+  errorBloque=false
 
-
-  constructor(public dialogRef: MatDialogRef<NuevoBloqueComponent>, @Inject(MAT_DIALOG_DATA) private data: any) { }
+  constructor(public dialogRef: MatDialogRef<NuevoBloqueComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   
   formBloque = new FormGroup({
      nombre: new FormControl('', Validators.required),
@@ -51,7 +51,10 @@ export class NuevoBloqueComponent implements OnInit {
       if (this.formBloque.valid) {
         this.dialogRef.close(this.formBloque.value);
       }
-  }}
+    }else{
+      this.errorBloque=true;
+    }
+  }
 
   cancelar(){
     if (this.data.b){

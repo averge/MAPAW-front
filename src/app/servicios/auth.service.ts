@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private sharingObject: any;
   private actual:any;
+  private perfil:any
   constructor(private http: HttpClient, private router: Router) { }
 
   get sharingValue() {
@@ -26,6 +27,17 @@ export class AuthService {
     console.log(this.actual)
     return this.actual;
   }
+
+  set verPerfil(obj){
+    console.log(obj)
+    this.perfil = obj;
+  }
+
+  get verPerfil(){
+    return this.perfil;
+  }
+
+
   login(email: string, password: string) {
     this.http.post('http://localhost:3000/api/login', { email, password })
       .subscribe((res: any) => {

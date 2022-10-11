@@ -6,6 +6,8 @@ import { NuevoejercicioComponent } from '../nuevoejercicio/nuevoejercicio.compon
 import { BloquesComponent } from '../bloques/bloques.component';
 import { NuevoBloqueComponent } from '../nuevo-bloque/nuevo-bloque.component';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/servicios/auth.service';
 
 @Component({
@@ -14,11 +16,16 @@ import { AuthService } from 'src/app/servicios/auth.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  ver=""
+  ver="alumnos"
+  index:any
+  pageEvent:any;
+  pageSize=4
+  pageIndex=1
+  busquedaError=false;
   bloques:any=[{nombre: 'fuerza', descripcion: 'Mejora tu fuerza', ejercicios: [{
     tipo: 'Aerobico',
     nombre: 'Correr',
-    descripcion: 'Correr 15 minutos',
+    descripcion: 'Correr recto maxima velocidad',
     zonaMuscular: 'Piernas',
     dificultad: 1,
     duracion: "15 minutos",
@@ -27,14 +34,24 @@ export class HomeComponent implements OnInit {
   },{
     tipo: 'Aerobico',
     nombre: 'Nadar',
-    descripcion: 'Nadar 15 minutos',
-    zonaMuscular: 'Piernas',
+    descripcion: 'Nadar pecho',
+    zonaMuscular: 'Todo el cuerpo',
     dificultad: 5,
     duracion: "15 minutos",
     materiales: 'Traje de baño',
     video: '',
   }]},
-               {nombre: 'resistencia', descripcion: 'Mejora tu resistencia', ejercicios: [{nombre: 'Sentadilla', descripcion: 'Sentadilla con barra', tipo: 'Fuerza',zonaMuscular:"pierna", dificultad: 3, video: 'https://www.youtube.com/watch?v=QXeEoD0pB3E'}]}]
+               {nombre: 'resistencia', descripcion: 'Mejora tu resistencia', ejercicios: [{nombre: 'Sentadillas', descripcion: 'Sentadilla con barra', tipo: 'Fuerza',zonaMuscular:"pierna", dificultad: 3, video: 'https://www.youtube.com/watch?v=QXeEoD0pB3E'},
+               {
+                tipo: 'Aerobico',
+                nombre: 'Nadar',
+                descripcion: 'Nadar 15 minutos',
+                zonaMuscular: 'Piernas',
+                dificultad: 5,
+                duracion: "15 minutos",
+                materiales: 'Traje de baño',
+                video: '',
+              } ]}]
 
   usuarios= [
     {nombre: 'Juan', apellido: 'Perez', edad: 20, sexo: 'Masculino', email: 'jj@jj.com', plan: 2},
@@ -46,7 +63,7 @@ export class HomeComponent implements OnInit {
   ejercicios= [{
     tipo: 'Aerobico',
     nombre: 'Correr',
-    descripcion: 'Correr 15 minutos',
+    descripcion: 'Correr recto maxima velocidad',
     zonaMuscular: 'Piernas',
     dificultad: 1,
     duracion: "15 minutos",
@@ -57,10 +74,10 @@ export class HomeComponent implements OnInit {
   {
     tipo: 'Aerobico',
     nombre: 'Nadar',
-    descripcion: 'Nadar 15 minutos',
-    zonaMuscular: 'Piernas',
+    descripcion: 'Nadar pecho',
+    zonaMuscular: 'Todo el cuerpo',
     dificultad: 5,
-    duracion: "15 minutos",
+    duracion: "20 minutos",
     materiales: 'Traje de baño',
     video: '',
     d:false
@@ -68,20 +85,20 @@ export class HomeComponent implements OnInit {
   {
     tipo: 'Anaerobico',
     nombre: 'Sentadillas',
-    descripcion: '15 sentadillas',
+    descripcion: 'sentdaillas con barra',
     zonaMuscular: 'Piernas',
     d:false,
     dificultad: 4,
-    duracion: "15 minutos",
+    duracion: "15 repeticiones",
     materiales: 'Banco',
     video: 'https://www.youtube.com/watch?v=BjixzWEw4EY',},
     {
       tipo: 'Mixto',
       nombre: 'Abdominales',
-      descripcion: '15 abdominales',
+      descripcion: 'Abdominales cortos sin peso',
       zonaMuscular: 'Abdomen',
       dificultad: 5,
-      duracion: "15 minutos",
+      duracion: "20 repeticiones",
       materiales: 'Ninguno',
       video: 'https://www.youtube.com/watch?v=dkq-hCgoQdI',
       d:false
@@ -90,10 +107,10 @@ export class HomeComponent implements OnInit {
   {
     tipo: 'Anaerobico',
     nombre: 'Flexiones',
-    descripcion: '15 flexiones',
+    descripcion: 'Flexiones con aplauso',
     zonaMuscular: 'Pecho',
-    dificultad: 3,
-    duracion: "15 minutos",
+    dificultad: 5,
+    duracion: "10 repeticiones",
     materiales: 'Ninguno',
     video: 'https://www.youtube.com/watch?v=e_EKkqoHxns',
     d:false
@@ -103,18 +120,19 @@ export class HomeComponent implements OnInit {
 
   
   public filtroTipo: FormControl = new FormControl("Todos");
-  public filtroEjercicio: FormControl = new FormControl()
+  public filtroEjercicio: FormControl = new FormControl("")
   sinBloques=false
   sinEjercicios=false
   usuarioActual= this.auth.actualUser;
+  pageLenght:any;
     
-  constructor( private router: Router, public dialog: MatDialog, private _sanitizer: DomSanitizer, private auth:AuthService) { }
+  constructor( private router: Router, public dialog: MatDialog, private _sanitizer: DomSanitizer, private auth:AuthService, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
-    console.log(this.auth.actualUser)
     this.ejerciciosValid=this.ejercicios;
+    this.pageLenght=this.ejerciciosValid.length;
     this.usuarioActual= this.auth.actualUser;
-    console.log(this.usuarioActual)
+    this.ejerciciosValid=this.ejerciciosValid.slice(0,this.pageSize)
   }
   cerrarSesion(){
     this.usuarioActual=null;
@@ -143,6 +161,15 @@ export class HomeComponent implements OnInit {
       for (let i = 0; i < this.ejercicios.length; i++) {
         if(this.ejercicios[i].nombre==ejercicio){
           this.ejercicios.splice(i,1);
+          this.ejerciciosValid=this.ejercicios;
+          this.filtroTipo.setValue("Todos")
+          this.filtroEjercicio.setValue("")
+          this.index=0
+
+          this.buscarEjercicio()
+          this.snackbar.open("Ejercicio eliminado con exito", "Cerrar", { duration: 4000, });
+          //this.pageLenght=this.ejerciciosValid.length;
+          //this.ejerciciosValid=this.ejerciciosValid.slice(0,this.pageSize)
         }
      }
     }    
@@ -155,7 +182,6 @@ export class HomeComponent implements OnInit {
     for (let i = 0; i < this.ejercicios.length; i++) {
       nombresEjercicios.push(this.ejercicios[i].nombre.toLocaleUpperCase());
     }
-    console.log(nombresEjercicios);
     const dialogRef = this.dialog.open(NuevoejercicioComponent, {
       height: '75%',width: '60%',
       panelClass: 'js-dialog',  data: {nombresEjercicios:nombresEjercicios }   
@@ -164,11 +190,17 @@ export class HomeComponent implements OnInit {
       if (!result === true ) return;
       this.ejercicios.push(result);
       this.sinEjercicios=false;
+      this.filtroTipo.setValue("Todos");
+      this.filtroEjercicio.setValue("");
+      this.ejerciciosValid=this.ejercicios;
+      this.buscarEjercicio()
+      this.snackbar.open("Ejercicio creado con exito", "Cerrar", { duration: 4000, });
+      //this.pageLenght=this.ejerciciosValid.length;
+      //this.ejerciciosValid=this.ejerciciosValid.slice(0,this.pageSize)
     } );
   }
   verPerfil(){
     this.router.navigate(['/perfil']);
-    console.log('ver perfil');
   }
   counter(i: number) {
     return new Array(i);
@@ -184,15 +216,16 @@ editarEjercicio(ejercicio:any){
     panelClass: 'js-dialog',  data: {ejercicio,nombresEjercicios}   
   });
   dialogRef.afterClosed().subscribe(result => {
-    console.log(result)
     if (!result === true ) return;
     for (let i = 0; i < this.ejercicios.length; i++) {
       if(this.ejercicios[i].nombre==ejercicio.nombre){
-        console.log(this.ejercicios)
         result.d=false;
         this.ejercicios[i]=result;
+        this.filtroTipo.setValue("Todos");
+        this.filtroEjercicio.setValue("");
         this.ejerciciosValid=this.ejercicios;
-        console.log(this.ejercicios)
+        this.buscarEjercicio()
+        this.snackbar.open("Ejercicio editado con exito", "Cerrar", { duration: 4000, });
       }
    }
   } );
@@ -200,14 +233,23 @@ editarEjercicio(ejercicio:any){
 
 
 filtroTipoChange(){
-  console.log(this.filtroTipo.value);
   if(this.filtroTipo.value=="Todos"){
     this.ejerciciosValid=this.ejercicios;
     this.filtroEjercicio.setValue("");
+    this.pageLenght=this.ejerciciosValid.length;
+    this.ejerciciosValid=this.ejerciciosValid.slice(0,this.pageSize)
   }else{
     this.ejerciciosValid=this.ejercicios.filter((e:any) => e.tipo === this.filtroTipo.value);
+    //this.pageLenght=this.ejerciciosValid.length;
+    this.pageLenght=this.ejerciciosValid.length;
+    this.ejerciciosValid=this.ejerciciosValid.slice(0,this.pageSize)
     this.buscarEjercicio()
   }
+}
+
+userPerfil(any:any){
+  this.auth.verPerfil=any;
+  this.router.navigate(['/perfil']);
 }
 nuevoBloque(){
   var e=[]
@@ -219,43 +261,53 @@ nuevoBloque(){
     panelClass: 'js-dialog',  data: {e}   
   });
   dialogRef.afterClosed().subscribe(result => {
-    console.log(result)
     if(!result){
-      console.log(this.ejercicios)
       return;
     }else{
       this.bloques.push(result);
-      console.log(this.bloques)
       this.sinBloques=false
-      console.log(this.ejercicios)
+      this.snackbar.open("Bloque creado con exito", "Cerrar", { duration: 4000, });
     }
     }
   );
-  console.log(this.ejercicios)
 
 }
 
 
 verBloque(){
-  console.log('ver bloque');
   const dialogRef = this.dialog.open(BloquesComponent, {
     panelClass: 'js-dialog',  data: { }   
   });
 }
 
 buscarEjercicio(){
+  this.busquedaError=false;
   if(this.filtroEjercicio.value==""){
     if(this.filtroTipo.value=="Todos"){
       this.ejerciciosValid=this.ejercicios;
+      this.pageLenght=this.ejerciciosValid.length;
+      this.ejerciciosValid=this.ejerciciosValid.slice(0,this.pageSize)
     }else{
       this.filtroTipoChange()
     }
   }else{
   if(this.filtroTipo.value != "Todos"){
-    this.ejerciciosValid=this.ejerciciosValid.filter((e:any) => e.nombre.toUpperCase().includes(this.filtroEjercicio.value.toUpperCase()));  
+    this.ejerciciosValid=this.ejerciciosValid.filter((e:any) => e.nombre.toUpperCase().includes(this.filtroEjercicio.value.toUpperCase()));
+    if(this.ejerciciosValid.length==0){
+      this.busquedaError=true;
+    }else{
+      this.busquedaError=false;
+    }
   }else{
     this.ejerciciosValid=this.ejercicios.filter((e:any) => e.nombre.toUpperCase().includes(this.filtroEjercicio.value.toUpperCase())); 
+    if(this.ejerciciosValid.length==0){
+      this.busquedaError=true;
+    }else{
+      this.busquedaError=false;
+    }
   }
+
+this.pageLenght=this.ejerciciosValid.length;
 }
 }
 
@@ -264,6 +316,7 @@ eliminarBloque(b:any){
     for (let i = 0; i < this.bloques.length; i++) {
       if(this.bloques[i].nombre==b.nombre){
         this.bloques.splice(i,1);
+        this.snackbar.open("Bloque eliminado con exito", "Cerrar", { duration: 4000, });
       }
     }
   }
@@ -291,6 +344,10 @@ eliminarBloque(b:any){
     return (dif/b.ejercicios.length).toFixed(2);
   }
 
+  paginador(any:any){
+    this.buscarEjercicio()
+    this.ejerciciosValid=this.ejercicios.slice(any.pageIndex*any.pageSize,any.pageIndex*any.pageSize+any.pageSize);
+  }
   editarBloque(b:any){
   var e=[]
   for (let i = 0; i < this.ejercicios.length; i++) {
@@ -307,6 +364,7 @@ eliminarBloque(b:any){
         for (let i = 0; i < this.bloques.length; i++) {
           if(this.bloques[i].nombre==b.nombre){
             this.bloques[i]=result;
+            this.snackbar.open("Bloque editado con exito", "Cerrar", { duration: 4000, });
           }
         }
       }

@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
     user: new FormControl('', Validators.required),
     pass: new FormControl('', Validators.required),
   });
-  
+  hide = true;
   users:any = [
     {user: "admin", mail: "admin@admin", pass: "admin", nombre: "admin", apellido: "admin", telefono: "123456789", dni: "12345678", rol: "P", plan: "", dolencias: "", fechaNacieminto: "2020-01-01"},
   ]

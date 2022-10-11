@@ -1,25 +1,26 @@
 
 <form [formGroup]="loginForm">
     <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>User Name</mat-label>
+    <mat-label>Usuario</mat-label>
     <input matInput placeholder="Enter your name" name="usename" formControlName="user">
     <mat-error *ngIf="loginForm.controls['user'].errors ">
-        User Name is required
+        Usuario es requerido
     </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Password</mat-label>
-    <input matInput placeholder="Enter your password" value="" name="password" type="password" formControlName="pass">
+    <mat-label>Contraseña</mat-label>
+    <input matInput placeholder="Enter your password"  [type]="hide ? 'password' : 'text'" value="" name="password" type="password" formControlName="pass">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
 <mat-error *ngIf="loginForm.controls['pass'].errors ">
-        Password is required
+        Contraseña es requerida
     </mat-error>
       
 </mat-form-field>
     <br>
     <button mat-raised-button color="primary" (click)="login()">Iniciar sesion</button>
     
-<button mat-raised-button color="primary" (click)="register()">Registarse </button>
+<button mat-raised-button color="primary" (click)="register()">Registrarse </button>
 <p *ngIf="error">
     Usuario o contraseña incorrecta
 </p>

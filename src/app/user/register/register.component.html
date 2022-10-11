@@ -3,7 +3,7 @@
     <mat-label>Rol</mat-label>
     <mat-select formControlName="rol" (selectionChange)="cambioRol()">
         <mat-option value="P">Profesor</mat-option>
-        <mat-option value="A">Alumno</mat-option>
+        <!-- <mat-option value="A">Alumno</mat-option>-->
     </mat-select>
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
@@ -15,9 +15,13 @@
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Contraseña</mat-label>
-    <input matInput placeholder="Ingresar Contraseña" value="" name="password" type="password" formControlName="pass">
+    <input matInput placeholder="Ingresar Contraseña" [type]="hide ? 'password' : 'text'" value="" name="password" type="password" formControlName="pass">
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     <mat-error>
         <span *ngIf="registerForm.controls['pass'].hasError('required')">La contraseña es requerida</span>
+    </mat-error>
+    <mat-error>
+        <span *ngIf="registerForm.controls['pass'].hasError('minlength')">La contraseña debe tener al menos 8 caracteres</span>
     </mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width" appearance="fill">
@@ -69,7 +73,7 @@
             <span *ngIf="registerForm.controls['dni'].hasError('minlength')">El dni debe ser mas largo</span>
         </mat-error>
     </mat-form-field>
-    <div *ngIf="!esProfesor">
+    <div *ngIf="false">
 
         <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Plan</mat-label>
@@ -84,7 +88,7 @@
         </mat-form-field>
     </div>
    <br>
-    <button mat-raised-button color="primary" (click)="register()" style="align-items: center;">Registarse</button>
+    <button mat-raised-button color="primary" (click)="register()" style="align-items: center;">Registrarse</button>
     <button mat-raised-button color="primary" (click)="iniciarSesion()">Iniciar Sesion</button>
 
 

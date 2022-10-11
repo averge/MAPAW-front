@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth.service';
 
@@ -13,29 +14,31 @@ esProfesor = false;
   registerForm = new FormGroup({
     user: new FormControl('', Validators.required),
     mail: new FormControl('', [Validators.required, Validators.email]),
-    pass: new FormControl('', Validators.required),
+    pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
     nombre: new FormControl('', Validators.required),
     apellido: new FormControl('', Validators.required),
     fechaNacieminto: new FormControl('', Validators.required),
     telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(7)]),
     dni: new FormControl('', [Validators.required, Validators.minLength(7)]),
-    rol: new FormControl('A', Validators.required),
+    rol: new FormControl('P', Validators.required),
     plan: new FormControl(''),
     dolencias: new FormControl(''),
 
   });
-  constructor(private router: Router,private auth:AuthService) { }
+  hide = true;
+  constructor(private router: Router,private auth:AuthService, private snackbar:MatSnackBar) { }
 
   ngOnInit(): void {
   }
   register() {
-    console.log('register');
-    console.log(this.registerForm.value);
-    console.log(this.registerForm.valid);
     if( this.registerForm.valid ){
       console.log(this.registerForm);
       this.auth.sharingValue = this.registerForm.value;
       this.router.navigate(['/login']);
+      this.snackbar.open('Usuario registrado correctamente', 'Cerrar', {
+        duration: 2000,
+      });
+
     }
   }
 

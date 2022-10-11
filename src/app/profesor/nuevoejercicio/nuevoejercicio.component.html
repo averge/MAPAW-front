@@ -1,7 +1,9 @@
 <div  mat-dialog-content style="width: 100%;">
-    
     <mat-card style="width: 100%;">
+        <button (click)="cancelar()" style="float: right;" mat-button >X</button>
+
         <mat-card-header>
+
             <mat-card-title *ngIf="!data.ejercicio" style="font-size: 30px;">Nuevo ejercicio</mat-card-title>
             <mat-card-title *ngIf="data.ejercicio" style="font-size: 30px;">Editar ejercicio</mat-card-title>
 
@@ -37,7 +39,7 @@
     </mat-form-field>
     <br>
     <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Video de YouYube</mat-label>
+        <mat-label>Video de YouTube</mat-label>
         <input matInput placeholder="Video"  name="video" formControlName="video">
         
     </mat-form-field><p style="color: red" *ngIf="videoErro"> El video tiene un fomato invalido</p>

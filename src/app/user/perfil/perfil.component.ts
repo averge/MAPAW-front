@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/servicios/auth.service';
   styleUrls: ['./perfil.component.scss']
 })
 export class PerfilComponent implements OnInit {
+  actualUser:any;
   usuario= {
     nombre: 'Juan',
     apellido: 'Perez',
@@ -19,18 +20,21 @@ export class PerfilComponent implements OnInit {
     plan: '1',
     dolencias: 'ninguna',
   };
-  actualUser=this.auth.actualUser;
-
   constructor( private router: Router,private auth:AuthService) { }
 
   ngOnInit(): void {
+    if (this.auth.verPerfil != null){
+      this.actualUser=this.auth.verPerfil;
+    }else{
+      this.actualUser=this.auth.actualUser;
+    }
   }
   cerrarSesion(){
-    this.actualUser=null;
     this.auth.actualUser=null;
     this.router.navigate(['/login']);
   }
   volver(){
+    this.auth.verPerfil=null;
     this.router.navigate(['/profesor']);
   }
 

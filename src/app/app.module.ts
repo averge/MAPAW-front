@@ -27,6 +27,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { BloquesComponent } from './profesor/bloques/bloques.component';
 import { NuevoBloqueComponent } from './profesor/nuevo-bloque/nuevo-bloque.component';
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { NuevoBloqueComponent } from './profesor/nuevo-bloque/nuevo-bloque.compo
     MatCardModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
     
   ],
   providers: [],

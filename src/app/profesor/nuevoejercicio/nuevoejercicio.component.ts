@@ -42,7 +42,12 @@ nombreError=false
         }
       else{
         console.log(this.fomularioEjercicio.value);
-        this.dialogRef.close(this.fomularioEjercicio.value);
+        this.verficarNombre()
+        if (this.nombreError){
+          return
+        }else{
+          this.dialogRef.close(this.fomularioEjercicio.value);
+        }
       }
     }
         else{
@@ -54,10 +59,18 @@ nombreError=false
   }}
 
   verficarNombre(){
-    if(this.data.nombresEjercicios.includes(this.fomularioEjercicio.controls['nombre'].value.toUpperCase())){
-      this.nombreError=true
-    }else{
-      this.nombreError=false
+      if(this.data.nombresEjercicios.includes(this.fomularioEjercicio.controls['nombre'].value.toUpperCase())){
+        if(this.data.ejercicio){
+          if(this.data.ejercicio.nombre.toUpperCase()==this.fomularioEjercicio.controls['nombre'].value.toUpperCase()){
+            this.nombreError=false
+          }else{
+          this.nombreError=true
+        }}
+        else{
+          this.nombreError=true
+        }
+      }else{
+        this.nombreError=false
     }
   }
 
