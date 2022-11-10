@@ -16,8 +16,3 @@ Funcionando perfil profesor falta implementar perfil alumno
 user: admin
 pass: admin
 
-## Instalacion
-
-git clone https://github.com/averge/MAPAW-front.git
-npm install
-ng serve
