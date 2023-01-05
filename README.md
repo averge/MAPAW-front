@@ -9,7 +9,7 @@ Funcionando perfil profesor falta implementar perfil alumno
 
 ## Web funcionando
 
-[WEB](https://averge.github.io/MAPAW-front/login)
+[WEB](https://averge.github.io/MAPAW-front/)
 
 ## Datos login
 
